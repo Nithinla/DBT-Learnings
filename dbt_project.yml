@@ -41,7 +41,6 @@ models:
         Facts:
             +materialized: table
     Staging:
-    
         +materialized: table
 
 
