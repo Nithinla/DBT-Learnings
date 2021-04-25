@@ -1,0 +1,59 @@
+version: 2
+
+models:
+    - name: stg_customers
+      description: Staged customer data from Jaffle shop.
+      columns:
+        - name: customer_id
+          description: Primary key
+          tests:
+            - unique
+            - not_null
+            - relationships:
+                to: ref('stg_orders')
+                field: customer_id
+
+    - name: stg_orders
+      columns: 
+        - name: customer_id
+          tests:
+            - relationships:
+                to: ref('stg_customers')
+                field: customer_id   
+        - name: status
+          description: " {{ doc('order_status') }} "             
+
+    - name: fct_orders
+      description: Orders information of Jaffle shop.
+      columns:
+        - name: order_id
+          description: Primary key
+          tests:
+            - unique
+        - name: amount
+          description: Confirmed orders amounts.
+          tests:
+            - not_null
+
+    - name: stg_payments
+      description: Staged Orders and its payment status information of Jaffle shop 
+      columns:
+        - name: dollar_amount
+          description: Amounts are converted to dollars from cents.
+          tests:
+            - not_null
+        - name: status
+          description: " {{ doc('payment_status') }} "
+          tests:
+            - not_null
+            - accepted_values:
+                values:
+                  - success
+
+    - name: test
+      description: To experiment any of the features in DBT.
+      columns:
+        - name: one
+          description: " {{ doc('table_events') }} "
+
+
