@@ -5,4 +5,4 @@ select
   round(amount/100) as dollar_amount,
   created as created
 from 
-raw.stripe.payment
+{{ source('stripe_payment','payment') }}
