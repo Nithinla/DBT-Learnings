@@ -9,9 +9,6 @@ models:
           tests:
             - unique
             - not_null
-            - relationships:
-                to: ref('stg_orders')
-                field: customer_id
 
     - name: stg_orders
       columns: 
@@ -49,6 +46,7 @@ models:
             - accepted_values:
                 values:
                   - success
+                  - fail
 
     - name: test
       description: To experiment any of the features in DBT.
